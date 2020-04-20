@@ -1,0 +1,29 @@
+type Blog @model {
+  id: ID!
+  name: String!
+  @auth(
+    rules: [
+      {allow: owner, ownerField: "owner", operations: [create, update, delete]},
+    ])
+  posts: [Post] @connection(name: "BlogPosts")
+}
+
+type Post @model {
+  id: ID!
+  title: String!
+  @auth(
+    rules: [
+      {allow: owner, ownerField: "owner", operations: [create, update, delete]},
+    ]
+  )
+  blog: Blog @connection(name: "BlogPosts")
+  comments: [Comment] @connection(keyName: "byPost", fields: ["id"])
+}
+
+type Comment @model 
+@key(name: "byPost", fields: ["postID", "content"]) {
+  id: ID!
+  postID: ID!
+  content: String!
+  post: Post @connection(fields: ["postID"])
+}
