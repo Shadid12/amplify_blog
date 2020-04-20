@@ -1,50 +1,80 @@
 import React from 'react';
 import { withAuthenticator } from 'aws-amplify-react';
+import Home from './Home';
+
 import { API, graphqlOperation } from 'aws-amplify';
-import { listPosts } from './graphql/queries';
+import { getPost } from './graphql/queries';
+
+import {
+  BrowserRouter as Router,
+  Switch,
+  Route,
+  Link,
+  useParams
+} from "react-router-dom";
 
 import './app.css';
 
 function App() {
 
-  const [posts, setPosts] = React.useState([]);
+  return (
+    <Router>
+      <div className="container">
+        <nav className="nav">
+          <Link to="/"><b>Home</b></Link>
+        </nav>
 
+        <Switch>
+          <Route path="/post/:id">
+            <Post />
+          </Route>
+          <Route path="/users">
+            <Users />
+          </Route>
+          <Route path="/">
+            <Home />
+          </Route>
+        </Switch>
+      </div>
+    </Router>
+  )
+}
+
+function Post() {
+  let { id } = useParams();
+  const [post, setPost] = React.useState(null);
+  
   React.useEffect(() => {
-    getAllPosts()
+    queryPost();
   }, [])
 
-  const getAllPosts = async () => {
+  const queryPost = async () => {
     try {
-      let allposts = await API.graphql(graphqlOperation(listPosts));
-      console.log('all listPosts', allposts)
+      let response = await API.graphql(graphqlOperation(getPost, { id }));
+      setPost(response.data.getPost)
+      console.log('Post Now ===>>>>', response.data.getPost);
     } catch (error) {
-      console.log(error)
+      console.log(error);
     }
   }
-
   return (
-    <div className="container">
-      <nav className="nav">
-        <a><b>Home</b></a>
-      </nav>
-      <div class="row">
-        <div className="column column-50">
-          <h2>Posts</h2>
+    <div>
+      {post ? (
+        <div>
+          <h3>{post.title}</h3>
           <ul>
-            <li>
-              <a>View This article</a>
-            </li>
-            <li>
-              <a>View This article</a>
-            </li>
+            {
+              post.comments.items.map(com => (<li>{com.content}</li>))
+            }
           </ul>
         </div>
-        <div className="column column-offset-25">
-          <button>Write Post</button>
-        </div>
-      </div>
+      ): <div>Loading...</div>}
     </div>
-  );
+  )
+}
+
+function Users() {
+  return <h2>Users</h2>;
 }
 
 export default withAuthenticator(App);
