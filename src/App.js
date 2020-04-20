@@ -1,6 +1,7 @@
 import React from 'react';
 import { withAuthenticator } from 'aws-amplify-react';
 import Home from './Home';
+import PostNew from './PostNew';
 
 import { API, graphqlOperation } from 'aws-amplify';
 import { getPost } from './graphql/queries';
@@ -28,8 +29,8 @@ function App() {
           <Route path="/post/:id">
             <Post />
           </Route>
-          <Route path="/users">
-            <Users />
+          <Route path="/posts/new">
+            <PostNew />
           </Route>
           <Route path="/">
             <Home />
@@ -62,6 +63,7 @@ function Post() {
       {post ? (
         <div>
           <h3>{post.title}</h3>
+          <p>{post.content}</p>
           <ul>
             {
               post.comments.items.map(com => (<li>{com.content}</li>))

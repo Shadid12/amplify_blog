@@ -11,6 +11,7 @@ type Blog @model {
 type Post @model {
   id: ID!
   title: String!
+  content: String!
   @auth(
     rules: [
       {allow: owner, ownerField: "owner", operations: [create, update, delete]},

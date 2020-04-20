@@ -1,9 +1,9 @@
 import React from 'react';
 import { API, graphqlOperation } from 'aws-amplify';
 import { listPosts } from './graphql/queries';
-import { Link } from "react-router-dom";
+import { Link, withRouter } from "react-router-dom";
 
-export default function Home() {
+function Home(props) {
     const [posts, setPosts] = React.useState([]);
   
     React.useEffect(() => {
@@ -35,8 +35,10 @@ export default function Home() {
           </ul>
         </div>
         <div className="column column-offset-25">
-          <button>Write Post</button>
+          <button onClick={() => props.history.push('/posts/new')}>Write Post</button>
         </div>
       </div>
     )
 }
+
+export default withRouter(Home);

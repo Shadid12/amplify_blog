@@ -10,6 +10,7 @@ export const onCreateBlog = /* GraphQL */ `
         items {
           id
           title
+          content
         }
         nextToken
       }
@@ -25,6 +26,7 @@ export const onUpdateBlog = /* GraphQL */ `
         items {
           id
           title
+          content
         }
         nextToken
       }
@@ -40,6 +42,7 @@ export const onDeleteBlog = /* GraphQL */ `
         items {
           id
           title
+          content
         }
         nextToken
       }
@@ -51,6 +54,7 @@ export const onCreatePost = /* GraphQL */ `
     onCreatePost {
       id
       title
+      content
       blog {
         id
         name
@@ -74,6 +78,7 @@ export const onUpdatePost = /* GraphQL */ `
     onUpdatePost {
       id
       title
+      content
       blog {
         id
         name
@@ -97,6 +102,7 @@ export const onDeletePost = /* GraphQL */ `
     onDeletePost {
       id
       title
+      content
       blog {
         id
         name
@@ -124,6 +130,7 @@ export const onCreateComment = /* GraphQL */ `
       post {
         id
         title
+        content
         blog {
           id
           name
@@ -144,6 +151,7 @@ export const onUpdateComment = /* GraphQL */ `
       post {
         id
         title
+        content
         blog {
           id
           name
@@ -164,6 +172,7 @@ export const onDeleteComment = /* GraphQL */ `
       post {
         id
         title
+        content
         blog {
           id
           name
