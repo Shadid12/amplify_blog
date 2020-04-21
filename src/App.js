@@ -3,8 +3,9 @@ import { withAuthenticator } from 'aws-amplify-react';
 import Home from './Home';
 import PostNew from './PostNew';
 
-import { API, graphqlOperation } from 'aws-amplify';
+import { API, graphqlOperation, Auth } from 'aws-amplify';
 import { getPost } from './graphql/queries';
+import { deletePost } from './graphql/mutations';
 
 import {
   BrowserRouter as Router,
@@ -18,11 +19,16 @@ import './app.css';
 
 function App() {
 
+  const logout = async () => {
+    await Auth.signOut();
+  }
+
   return (
     <Router>
       <div className="container">
         <nav className="nav">
           <Link to="/"><b>Home</b></Link>
+          <a onClick={logout} className="lnk">Logout</a>
         </nav>
 
         <Switch>
@@ -31,6 +37,9 @@ function App() {
           </Route>
           <Route path="/posts/new">
             <PostNew />
+          </Route>
+          <Route path="/posts/edit/:id">
+            <PostNew isEdit/>
           </Route>
           <Route path="/">
             <Home />
@@ -58,12 +67,27 @@ function Post() {
       console.log(error);
     }
   }
+
+  const deleteCurrentPost = async () => {
+    try {
+      let input = {
+        id: post.id
+      }
+      let response = await API.graphql(graphqlOperation(deletePost, { input }));
+      console.log('--->>> DELETED', response);
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
   return (
     <div>
       {post ? (
         <div>
           <h3>{post.title}</h3>
           <p>{post.content}</p>
+          <a onClick={deleteCurrentPost}>Delete</a>
+          <Link to={`/posts/edit/${post.id}`}><b>Edit</b></Link>
           <ul>
             {
               post.comments.items.map(com => (<li>{com.content}</li>))

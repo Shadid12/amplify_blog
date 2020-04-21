@@ -11,6 +11,7 @@ export const getBlog = /* GraphQL */ `
           id
           title
           content
+          owner
         }
         nextToken
       }
@@ -41,6 +42,7 @@ export const getPost = /* GraphQL */ `
       id
       title
       content
+      owner
       blog {
         id
         name
@@ -70,6 +72,7 @@ export const listPosts = /* GraphQL */ `
         id
         title
         content
+        owner
         blog {
           id
           name
@@ -92,6 +95,7 @@ export const getComment = /* GraphQL */ `
         id
         title
         content
+        owner
         blog {
           id
           name
@@ -118,6 +122,7 @@ export const listComments = /* GraphQL */ `
           id
           title
           content
+          owner
         }
       }
       nextToken

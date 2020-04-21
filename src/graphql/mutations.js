@@ -14,6 +14,7 @@ export const createBlog = /* GraphQL */ `
           id
           title
           content
+          owner
         }
         nextToken
       }
@@ -33,6 +34,7 @@ export const updateBlog = /* GraphQL */ `
           id
           title
           content
+          owner
         }
         nextToken
       }
@@ -52,6 +54,7 @@ export const deleteBlog = /* GraphQL */ `
           id
           title
           content
+          owner
         }
         nextToken
       }
@@ -67,6 +70,7 @@ export const createPost = /* GraphQL */ `
       id
       title
       content
+      owner
       blog {
         id
         name
@@ -94,6 +98,7 @@ export const updatePost = /* GraphQL */ `
       id
       title
       content
+      owner
       blog {
         id
         name
@@ -121,6 +126,7 @@ export const deletePost = /* GraphQL */ `
       id
       title
       content
+      owner
       blog {
         id
         name
@@ -152,6 +158,7 @@ export const createComment = /* GraphQL */ `
         id
         title
         content
+        owner
         blog {
           id
           name
@@ -176,6 +183,7 @@ export const updateComment = /* GraphQL */ `
         id
         title
         content
+        owner
         blog {
           id
           name
@@ -200,6 +208,7 @@ export const deleteComment = /* GraphQL */ `
         id
         title
         content
+        owner
         blog {
           id
           name

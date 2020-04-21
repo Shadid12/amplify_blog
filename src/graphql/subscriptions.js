@@ -11,6 +11,7 @@ export const onCreateBlog = /* GraphQL */ `
           id
           title
           content
+          owner
         }
         nextToken
       }
@@ -27,6 +28,7 @@ export const onUpdateBlog = /* GraphQL */ `
           id
           title
           content
+          owner
         }
         nextToken
       }
@@ -43,6 +45,7 @@ export const onDeleteBlog = /* GraphQL */ `
           id
           title
           content
+          owner
         }
         nextToken
       }
@@ -50,11 +53,12 @@ export const onDeleteBlog = /* GraphQL */ `
   }
 `;
 export const onCreatePost = /* GraphQL */ `
-  subscription OnCreatePost {
-    onCreatePost {
+  subscription OnCreatePost($owner: String!) {
+    onCreatePost(owner: $owner) {
       id
       title
       content
+      owner
       blog {
         id
         name
@@ -74,11 +78,12 @@ export const onCreatePost = /* GraphQL */ `
   }
 `;
 export const onUpdatePost = /* GraphQL */ `
-  subscription OnUpdatePost {
-    onUpdatePost {
+  subscription OnUpdatePost($owner: String!) {
+    onUpdatePost(owner: $owner) {
       id
       title
       content
+      owner
       blog {
         id
         name
@@ -98,11 +103,12 @@ export const onUpdatePost = /* GraphQL */ `
   }
 `;
 export const onDeletePost = /* GraphQL */ `
-  subscription OnDeletePost {
-    onDeletePost {
+  subscription OnDeletePost($owner: String!) {
+    onDeletePost(owner: $owner) {
       id
       title
       content
+      owner
       blog {
         id
         name
@@ -131,6 +137,7 @@ export const onCreateComment = /* GraphQL */ `
         id
         title
         content
+        owner
         blog {
           id
           name
@@ -152,6 +159,7 @@ export const onUpdateComment = /* GraphQL */ `
         id
         title
         content
+        owner
         blog {
           id
           name
@@ -173,6 +181,7 @@ export const onDeleteComment = /* GraphQL */ `
         id
         title
         content
+        owner
         blog {
           id
           name
